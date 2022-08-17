@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SpotifaniniApplication<spotifanini>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.stefanini.spotifanini.SpotifaniniApplication",
+            "projectName": "spotifanini",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
