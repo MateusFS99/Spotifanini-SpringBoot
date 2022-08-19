@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
-@RequestMapping("/musics")
+@RequestMapping("/music")
 public class MusicController {
 
     @Autowired
