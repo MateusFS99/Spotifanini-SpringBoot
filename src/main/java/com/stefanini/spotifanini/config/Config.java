@@ -50,7 +50,7 @@ public class Config {
         ApiInfo apiInfo = new ApiInfoBuilder()
                 .title("Spotifanini Documentation")
                 .description("Documentation for Spotifanini API")
-                .license("MIT License")
+                .license("Apache License 2.0")
                 .licenseUrl("https://github.com/MateusFS99/Spotifanini-SpringBoot/blob/main/LICENSE")
                 .version("1.0.0")
                 .build();

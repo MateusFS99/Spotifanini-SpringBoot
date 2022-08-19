@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,6 @@ import com.stefanini.spotifanini.service.MusicService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/music")
@@ -27,6 +27,7 @@ public class MusicController {
     @Autowired
     private MusicService musicService;
 
+    //<---------- GET All Musics ---------->
     @ApiOperation(value = "Music List", notes = "This Endpoint Provides The List of All Musics")
     @ApiResponses({
             @ApiResponse(code = 204, message = "List Returned")
@@ -36,6 +37,7 @@ public class MusicController {
         return musicService.findAllMusics();
     }
 
+    //<---------- GET Music ---------->
     @ApiOperation(value = "Music", notes = "This Endpoint Provides The Music by The ID")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Music Returned")
@@ -45,6 +47,7 @@ public class MusicController {
         return musicService.findById(id);
     }
 
+    //<---------- POST METHOD ---------->
     @ApiOperation(value = "Music", notes = "This Endpoint Saves an Music")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Saved")
@@ -54,6 +57,7 @@ public class MusicController {
         return musicService.save(music);
     }
 
+    //<---------- PUT METHOD ---------->
     @ApiOperation(value = "Music", notes = "This Endpoint Updates an Music")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Updated")
@@ -63,6 +67,7 @@ public class MusicController {
         return musicService.update(id, music);
     }
 
+    //<---------- DELETE METHOD ---------->
     @ApiOperation(value = "Music", notes = "This Endpoint Deletes an Music")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Deleted")
