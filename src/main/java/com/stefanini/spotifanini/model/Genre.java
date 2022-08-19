@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,5 +27,6 @@ public class Genre {
     private String name;
 
     @OneToMany(mappedBy = "genre")
+    @JsonBackReference
     private List<Music> musics;
 }

@@ -3,9 +3,11 @@ package com.stefanini.spotifanini.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,8 +45,30 @@ public class GenreController {
         return genreService.findById(id);
     }
 
+    @ApiOperation(value = "Genre", notes = "This Endpoint Saves an Genre")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Genre Saved")
+    })
     @PostMapping
     public Genre save(@RequestBody Genre genre) {
         return genreService.save(genre);
+    }
+
+    @ApiOperation(value = "Genre", notes = "This Endpoint Updates an Genre")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Genre Updated")
+    })
+    @PutMapping("/{id}")
+    public Genre update(@PathVariable Long id, @RequestBody Genre genre) throws GenreNotFoundException {
+        return genreService.update(id, genre);
+    }
+
+    @ApiOperation(value = "Genre", notes = "This Endpoint Deletes an Genre")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Genre Deleted")
+    })
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) throws GenreNotFoundException {
+        genreService.delete(id);
     }
 }

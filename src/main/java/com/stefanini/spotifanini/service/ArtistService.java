@@ -28,4 +28,15 @@ public class ArtistService {
     public Artist save(Artist artist) {
         return artistRepository.save(artist);
     }
+
+    public Artist update(Long id, Artist artist) {
+
+        artist.setId(id);
+
+        return artistRepository.save(artist);
+    }
+
+    public void delete(Long id) {
+        artistRepository.deleteById(id);
+    } 
 }

@@ -10,7 +10,7 @@ import com.stefanini.spotifanini.repository.MusicRepository;
 
 @Service
 public class MusicService {
-    
+
     private final MusicRepository musicRepository;
 
     public MusicService(MusicRepository musicRepository) {
@@ -27,5 +27,16 @@ public class MusicService {
 
     public Music save(Music music) {
         return musicRepository.save(music);
+    }
+
+    public Music update(Long id, Music music) {
+
+        music.setId(id);
+
+        return musicRepository.save(music);
+    }
+
+    public void delete(Long id) {
+        musicRepository.deleteById(id);
     }
 }

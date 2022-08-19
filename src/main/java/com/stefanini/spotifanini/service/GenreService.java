@@ -28,4 +28,15 @@ public class GenreService {
     public Genre save(Genre genre) {
         return genreRepository.save(genre);
     }
+
+    public Genre update(Long id, Genre genre) {
+
+        genre.setId(id);
+
+        return genreRepository.save(genre);
+    }
+
+    public void delete(Long id) {
+        genreRepository.deleteById(id);
+    }
 }
