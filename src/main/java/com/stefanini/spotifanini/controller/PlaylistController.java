@@ -32,7 +32,7 @@ public class PlaylistController {
         this.playlistService = playlistService;
     }
 
-    // <---------- GET All Playlists ---------->
+    // <-------------------- GET All Playlists -------------------->
     @ApiOperation(value = "Playlist List", notes = "This Endpoint Provides The List of All Playlists")
     @ApiResponses({
             @ApiResponse(code = 200, message = "List of Playlists Returned")
@@ -42,7 +42,7 @@ public class PlaylistController {
         return playlistService.findAllPlaylists();
     }
 
-    // <---------- GET Playlist ---------->
+    // <-------------------- GET Playlist -------------------->
     @ApiOperation(value = "Playlist", notes = "This Endpoint Provides The Playlist by The ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Playlist Returned")
@@ -52,7 +52,7 @@ public class PlaylistController {
         return playlistService.findById(id);
     }
 
-    // <---------- POST METHODS ---------->
+    // <-------------------- POST METHODS -------------------->
     @ApiOperation(value = "Playlist", notes = "This Endpoint Saves a New Playlist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Playlist Saved")
@@ -73,7 +73,7 @@ public class PlaylistController {
         return playlistService.addMusic(playlistId, musicId);
     }
 
-    // <---------- PUT METHOD ---------->
+    // <------------------- PUT METHOD -------------------->
     @ApiOperation(value = "Playlist", notes = "This Endpoint Updates a Playlist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Playlist Updated")
@@ -83,7 +83,7 @@ public class PlaylistController {
         return playlistService.update(id, playlist);
     }
 
-    // <---------- DELETE METHOD ---------->
+    // <-------------------- DELETE METHOD -------------------->
     @ApiOperation(value = "Playlist", notes = "This Endpoint Deletes a Playlist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Playlist Deleted")

@@ -3,6 +3,7 @@ package com.stefanini.spotifanini.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.stefanini.spotifanini.exception.ArtistNotFoundException;
 import com.stefanini.spotifanini.model.Artist;
 import com.stefanini.spotifanini.service.ArtistService;
 
@@ -33,9 +33,6 @@ public class ArtistController {
 
     // <---------- GET All Artists ---------->
     @ApiOperation(value = "Artist List", notes = "This Endpoint Provides The List of All Artists")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "List of Artists Returned")
-    })
     @GetMapping
     public List<Artist> findAllArtists() {
         return artistService.findAllArtists();
@@ -43,41 +40,45 @@ public class ArtistController {
 
     // <---------- GET Artist ---------->
     @ApiOperation(value = "Artist", notes = "This Endpoint Provides The Artist by The ID")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Artist Returned")
-    })
     @GetMapping("/{id}")
-    public Artist findById(@PathVariable Long id) throws ArtistNotFoundException {
+    public Artist findById(@PathVariable Long id) {
         return artistService.findById(id);
     }
 
     // <---------- POST METHOD ---------->
     @ApiOperation(value = "Artist", notes = "This Endpoint Saves an New Artist")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Artist Saved")
+            @ApiResponse(code = 200, message = "Artist Saved"),
+            @ApiResponse(code = 400, message = "Empty Name"),
+            @ApiResponse(code = 401, message = "Artist Already Exists"),
+            @ApiResponse(code = 500, message = "Server Side Exception")
     })
     @PostMapping
-    public Artist save(@RequestBody Artist artist) {
+    public ResponseEntity<String> save(@RequestBody Artist artist) {
         return artistService.save(artist);
     }
 
     // <---------- PUT METHOD ---------->
     @ApiOperation(value = "Artist", notes = "This Endpoint Updates an Artist")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Artist Updated")
+            @ApiResponse(code = 200, message = "Artist Updated"),
+            @ApiResponse(code = 400, message = "Empty Name"),
+            @ApiResponse(code = 401, message = "Artist Already Exists"),
+            @ApiResponse(code = 500, message = "Server Side Exception")
     })
     @PutMapping("/{id}")
-    public Artist update(@PathVariable Long id, @RequestBody Artist artist) throws ArtistNotFoundException {
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Artist artist) {
         return artistService.update(id, artist);
     }
 
     // <---------- DELETE METHOD ---------->
     @ApiOperation(value = "Artist", notes = "This Endpoint Deletes an Artist")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Artist Deleted")
+            @ApiResponse(code = 200, message = "Artist Deleted"),
+            @ApiResponse(code = 500, message = "Server Side Exception")
     })
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) throws ArtistNotFoundException {
-        artistService.delete(id);
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        return artistService.delete(id);
     }
 }
