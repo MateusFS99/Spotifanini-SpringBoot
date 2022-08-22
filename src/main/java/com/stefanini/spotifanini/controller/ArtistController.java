@@ -31,21 +31,21 @@ public class ArtistController {
         this.artistService = artistService;
     }
 
-    // <---------- GET All Artists ---------->
+    // <-------------------- GET All Artists -------------------->
     @ApiOperation(value = "Artist List", notes = "This Endpoint Provides The List of All Artists")
     @GetMapping
     public List<Artist> findAllArtists() {
         return artistService.findAllArtists();
     }
 
-    // <---------- GET Artist ---------->
+    // <-------------------- GET Artist -------------------->
     @ApiOperation(value = "Artist", notes = "This Endpoint Provides The Artist by The ID")
     @GetMapping("/{id}")
     public Artist findById(@PathVariable Long id) {
         return artistService.findById(id);
     }
 
-    // <---------- POST METHOD ---------->
+    // <------------------- POST METHOD -------------------->
     @ApiOperation(value = "Artist", notes = "This Endpoint Saves an New Artist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Artist Saved"),
@@ -58,7 +58,7 @@ public class ArtistController {
         return artistService.save(artist);
     }
 
-    // <---------- PUT METHOD ---------->
+    // <-------------------- PUT METHOD -------------------->
     @ApiOperation(value = "Artist", notes = "This Endpoint Updates an Artist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Artist Updated"),
@@ -71,7 +71,7 @@ public class ArtistController {
         return artistService.update(id, artist);
     }
 
-    // <---------- DELETE METHOD ---------->
+    // <-------------------- DELETE METHOD -------------------->
     @ApiOperation(value = "Artist", notes = "This Endpoint Deletes an Artist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Artist Deleted"),

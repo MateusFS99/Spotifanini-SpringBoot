@@ -31,22 +31,22 @@ public class MusicController {
         this.musicService = musicService;
     }
 
-    // <---------- GET All Musics ---------->
+    // <-------------------- GET All Musics -------------------->
     @ApiOperation(value = "Music List", notes = "This Endpoint Provides The List of All Musics")
     @GetMapping
     public List<Music> findAllMusics() {
         return musicService.findAllMusics();
     }
 
-    // <---------- GET Music ---------->
+    // <-------------------GET Music -------------------->
     @ApiOperation(value = "Music", notes = "This Endpoint Provides The Music by The ID")
     @GetMapping("/{id}")
     public Music findById(@PathVariable Long id) {
         return musicService.findById(id);
     }
 
-    // <---------- POST METHOD ---------->
-    @ApiOperation(value = "Music", notes = "This Endpoint Saves an New Music")
+    // <-------------------- POST METHOD -------------------->
+    @ApiOperation(value = "Music", notes = "This Endpoint Saves a New Music")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Saved"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -58,8 +58,8 @@ public class MusicController {
         return musicService.save(music);
     }
 
-    // <---------- PUT METHOD ---------->
-    @ApiOperation(value = "Music", notes = "This Endpoint Updates an Music")
+    // <-------------------- PUT METHOD -------------------->
+    @ApiOperation(value = "Music", notes = "This Endpoint Updates a Music")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Updated"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -71,8 +71,8 @@ public class MusicController {
         return musicService.update(id, music);
     }
 
-    // <---------- DELETE METHOD ---------->
-    @ApiOperation(value = "Music", notes = "This Endpoint Deletes an Music")
+    // <-------------------- DELETE METHOD -------------------->
+    @ApiOperation(value = "Music", notes = "This Endpoint Deletes a Music")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Deleted"),
             @ApiResponse(code = 500, message = "Server Side Exception")

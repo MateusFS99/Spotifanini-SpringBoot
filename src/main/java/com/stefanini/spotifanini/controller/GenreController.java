@@ -31,22 +31,22 @@ public class GenreController {
         this.genreService = genreService;
     }
 
-    // <---------- GET All Genres ---------->
+    // <-------------------- GET All Genres -------------------->
     @ApiOperation(value = "Genre List", notes = "This Endpoint Provides The List of All Genres")
     @GetMapping
     public List<Genre> findAllGenres() {
         return genreService.findAllGenres();
     }
 
-    // <---------- GET Genre ---------->
+    // <-------------------- GET Genre -------------------->
     @ApiOperation(value = "Genre", notes = "This Endpoint Provides The Genre by The ID")
     @GetMapping("/{id}")
     public Genre findById(@PathVariable Long id) {
         return genreService.findById(id);
     }
 
-    // <---------- POST METHOD ---------->
-    @ApiOperation(value = "Genre", notes = "This Endpoint Saves an New Genre")
+    // <-------------------- POST METHOD -------------------->
+    @ApiOperation(value = "Genre", notes = "This Endpoint Saves a New Genre")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Genre Saved"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -58,8 +58,8 @@ public class GenreController {
         return genreService.save(genre);
     }
 
-    // <---------- PUT METHOD ---------->
-    @ApiOperation(value = "Genre", notes = "This Endpoint Updates an Genre")
+    // <-------------------- PUT METHOD -------------------->
+    @ApiOperation(value = "Genre", notes = "This Endpoint Updates a Genre")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Genre Updated"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -71,8 +71,8 @@ public class GenreController {
         return genreService.update(id, genre);
     }
 
-    // <---------- DELETE METHOD ---------->
-    @ApiOperation(value = "Genre", notes = "This Endpoint Deletes an Genre")
+    // <-------------------- DELETE METHOD -------------------->
+    @ApiOperation(value = "Genre", notes = "This Endpoint Deletes a Genre")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Genre Deleted"),
             @ApiResponse(code = 500, message = "Server Side Exception")
