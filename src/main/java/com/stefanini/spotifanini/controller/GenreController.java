@@ -3,6 +3,7 @@ package com.stefanini.spotifanini.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.stefanini.spotifanini.exception.GenreNotFoundException;
 import com.stefanini.spotifanini.model.Genre;
 import com.stefanini.spotifanini.service.GenreService;
 
@@ -25,13 +25,14 @@ import io.swagger.annotations.ApiResponses;
 public class GenreController {
 
     @Autowired
-    private GenreService genreService;
+    private final GenreService genreService;
+
+    public GenreController(GenreService genreService) {
+        this.genreService = genreService;
+    }
 
     // <---------- GET All Genres ---------->
     @ApiOperation(value = "Genre List", notes = "This Endpoint Provides The List of All Genres")
-    @ApiResponses({
-            @ApiResponse(code = 204, message = "List Returned")
-    })
     @GetMapping
     public List<Genre> findAllGenres() {
         return genreService.findAllGenres();
@@ -39,41 +40,45 @@ public class GenreController {
 
     // <---------- GET Genre ---------->
     @ApiOperation(value = "Genre", notes = "This Endpoint Provides The Genre by The ID")
-    @ApiResponses({
-            @ApiResponse(code = 204, message = "Genre Returned")
-    })
     @GetMapping("/{id}")
-    public Genre findById(@PathVariable Long id) throws GenreNotFoundException {
+    public Genre findById(@PathVariable Long id) {
         return genreService.findById(id);
     }
 
     // <---------- POST METHOD ---------->
-    @ApiOperation(value = "Genre", notes = "This Endpoint Saves a New Genre")
+    @ApiOperation(value = "Genre", notes = "This Endpoint Saves an New Genre")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Genre Saved")
+            @ApiResponse(code = 200, message = "Genre Saved"),
+            @ApiResponse(code = 400, message = "Empty Name"),
+            @ApiResponse(code = 401, message = "Genre Already Exists"),
+            @ApiResponse(code = 500, message = "Server Side Exception")
     })
     @PostMapping
-    public Genre save(@RequestBody Genre genre) {
+    public ResponseEntity<String> save(@RequestBody Genre genre) {
         return genreService.save(genre);
     }
 
     // <---------- PUT METHOD ---------->
-    @ApiOperation(value = "Genre", notes = "This Endpoint Updates a Genre")
+    @ApiOperation(value = "Genre", notes = "This Endpoint Updates an Genre")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Genre Updated")
+            @ApiResponse(code = 200, message = "Genre Updated"),
+            @ApiResponse(code = 400, message = "Empty Name"),
+            @ApiResponse(code = 401, message = "Genre Already Exists"),
+            @ApiResponse(code = 500, message = "Server Side Exception")
     })
     @PutMapping("/{id}")
-    public Genre update(@PathVariable Long id, @RequestBody Genre genre) throws GenreNotFoundException {
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Genre genre) {
         return genreService.update(id, genre);
     }
 
     // <---------- DELETE METHOD ---------->
-    @ApiOperation(value = "Genre", notes = "This Endpoint Deletes a Genre")
+    @ApiOperation(value = "Genre", notes = "This Endpoint Deletes an Genre")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Genre Deleted")
+            @ApiResponse(code = 200, message = "Genre Deleted"),
+            @ApiResponse(code = 500, message = "Server Side Exception")
     })
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) throws GenreNotFoundException {
-        genreService.delete(id);
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        return genreService.delete(id);
     }
 }
