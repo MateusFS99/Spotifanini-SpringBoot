@@ -1,12 +1,15 @@
 package com.stefanini.spotifanini.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.stefanini.spotifanini.exception.MusicNotFoundException;
 import com.stefanini.spotifanini.model.Music;
 import com.stefanini.spotifanini.repository.MusicRepository;
+import com.stefanini.spotifanini.util.Validations;
 
 @Service
 public class MusicService {
@@ -18,25 +21,85 @@ public class MusicService {
     }
 
     public List<Music> findAllMusics() {
-        return musicRepository.findAll();
+
+        try {
+            return musicRepository.findAll();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
-    public Music findById(Long id) throws MusicNotFoundException {
-        return musicRepository.findById(id).orElseThrow(() -> new MusicNotFoundException(id));
+    public Music findById(Long id) {
+
+        try {
+
+            Optional<Music> music = musicRepository.findById(id);
+
+            Validations.notPresent(music, "Music Not Found");
+
+            return music.get();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
-    public Music save(Music music) {
-        return musicRepository.save(music);
+    public ResponseEntity<String> save(Music music) {
+
+        try {
+
+            Validations.notExists(music.getName(), "Empty Name");
+            Validations.isPresent(musicRepository.findByName(music.getName()), "Music Already Exists");
+
+            musicRepository.save(music);
+
+            return new ResponseEntity<String>("Music Saved", HttpStatus.valueOf(200));
+
+        } catch (RuntimeException e) {
+            if (e.getMessage().equals("Empty Name"))
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+            else
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(401));
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
+        }
     }
 
-    public Music update(Long id, Music music) {
+    public ResponseEntity<String> update(Long id, Music music) {
 
-        music.setId(id);
+        try {
 
-        return musicRepository.save(music);
+            Optional<Music> oldMusic = musicRepository.findByName(music.getName());
+
+            Validations.notExists(music.getName(), "Empty Name");
+            if (oldMusic.isPresent() && oldMusic.get().getId() != id
+                    && oldMusic.get().getArtist().getId() != music.getArtist().getId())
+                Validations.isPresent(oldMusic, "Music Already Exists");
+
+            music.setId(id);
+            musicRepository.save(music);
+
+            return new ResponseEntity<String>("Music Updated", HttpStatus.valueOf(200));
+
+        } catch (RuntimeException e) {
+            if (e.getMessage().equals("Empty Name"))
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+            else
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(401));
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
+        }
     }
 
-    public void delete(Long id) {
-        musicRepository.deleteById(id);
+    public ResponseEntity<String> delete(Long id) {
+
+        try {
+
+            musicRepository.deleteById(id);
+
+            return new ResponseEntity<String>("Music Deleted", HttpStatus.valueOf(200));
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
+        }
     }
 }
