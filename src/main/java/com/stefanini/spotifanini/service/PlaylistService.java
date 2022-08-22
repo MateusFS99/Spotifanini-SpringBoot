@@ -1,7 +1,6 @@
 package com.stefanini.spotifanini.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -46,7 +45,7 @@ public class PlaylistService {
         playlistRepository.deleteById(id);
     }
 
-    public void addMusic(Long playlistId, Long musicId) throws PlaylistNotFoundException, MusicNotFoundException {
+    public Playlist addMusic(Long playlistId, Long musicId) throws PlaylistNotFoundException, MusicNotFoundException {
 
         Playlist playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new PlaylistNotFoundException(playlistId));
@@ -54,5 +53,7 @@ public class PlaylistService {
                 .orElseThrow(() -> new MusicNotFoundException(musicId));
 
         playlist.getMusics().add(music);
+
+        return playlistRepository.save(playlist);
     }
 }

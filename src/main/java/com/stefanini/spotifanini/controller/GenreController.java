@@ -27,7 +27,7 @@ public class GenreController {
     @Autowired
     private GenreService genreService;
 
-    //<---------- GET All Genres ---------->
+    // <---------- GET All Genres ---------->
     @ApiOperation(value = "Genre List", notes = "This Endpoint Provides The List of All Genres")
     @ApiResponses({
             @ApiResponse(code = 204, message = "List Returned")
@@ -37,7 +37,7 @@ public class GenreController {
         return genreService.findAllGenres();
     }
 
-    //<---------- GET Genre ---------->
+    // <---------- GET Genre ---------->
     @ApiOperation(value = "Genre", notes = "This Endpoint Provides The Genre by The ID")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Genre Returned")
@@ -47,8 +47,8 @@ public class GenreController {
         return genreService.findById(id);
     }
 
-    //<---------- POST METHOD ---------->
-    @ApiOperation(value = "Genre", notes = "This Endpoint Saves an Genre")
+    // <---------- POST METHOD ---------->
+    @ApiOperation(value = "Genre", notes = "This Endpoint Saves a New Genre")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Genre Saved")
     })
@@ -57,8 +57,8 @@ public class GenreController {
         return genreService.save(genre);
     }
 
-    //<---------- PUT METHOD ---------->
-    @ApiOperation(value = "Genre", notes = "This Endpoint Updates an Genre")
+    // <---------- PUT METHOD ---------->
+    @ApiOperation(value = "Genre", notes = "This Endpoint Updates a Genre")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Genre Updated")
     })
@@ -67,8 +67,8 @@ public class GenreController {
         return genreService.update(id, genre);
     }
 
-    //<---------- DELETE METHOD ---------->
-    @ApiOperation(value = "Genre", notes = "This Endpoint Deletes an Genre")
+    // <---------- DELETE METHOD ---------->
+    @ApiOperation(value = "Genre", notes = "This Endpoint Deletes a Genre")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Genre Deleted")
     })

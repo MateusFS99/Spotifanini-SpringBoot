@@ -30,6 +30,5 @@ public class Playlist {
 
     @ManyToMany
     @JoinTable(name = "playlist_music", joinColumns = @JoinColumn(name = "playlist_id"), inverseJoinColumns = @JoinColumn(name = "music_id"))
-    @JsonBackReference
     private List<Music> musics;
 }

@@ -27,7 +27,7 @@ public class MusicController {
     @Autowired
     private MusicService musicService;
 
-    //<---------- GET All Musics ---------->
+    // <---------- GET All Musics ---------->
     @ApiOperation(value = "Music List", notes = "This Endpoint Provides The List of All Musics")
     @ApiResponses({
             @ApiResponse(code = 204, message = "List Returned")
@@ -37,7 +37,7 @@ public class MusicController {
         return musicService.findAllMusics();
     }
 
-    //<---------- GET Music ---------->
+    // <---------- GET Music ---------->
     @ApiOperation(value = "Music", notes = "This Endpoint Provides The Music by The ID")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Music Returned")
@@ -47,8 +47,8 @@ public class MusicController {
         return musicService.findById(id);
     }
 
-    //<---------- POST METHOD ---------->
-    @ApiOperation(value = "Music", notes = "This Endpoint Saves an Music")
+    // <---------- POST METHOD ---------->
+    @ApiOperation(value = "Music", notes = "This Endpoint Saves a New Music")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Saved")
     })
@@ -57,8 +57,8 @@ public class MusicController {
         return musicService.save(music);
     }
 
-    //<---------- PUT METHOD ---------->
-    @ApiOperation(value = "Music", notes = "This Endpoint Updates an Music")
+    // <---------- PUT METHOD ---------->
+    @ApiOperation(value = "Music", notes = "This Endpoint Updates a Music")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Updated")
     })
@@ -67,8 +67,8 @@ public class MusicController {
         return musicService.update(id, music);
     }
 
-    //<---------- DELETE METHOD ---------->
-    @ApiOperation(value = "Music", notes = "This Endpoint Deletes an Music")
+    // <---------- DELETE METHOD ---------->
+    @ApiOperation(value = "Music", notes = "This Endpoint Deletes a Music")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Deleted")
     })
