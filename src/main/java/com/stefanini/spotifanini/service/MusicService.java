@@ -52,7 +52,7 @@ public class MusicService {
             Validations.notExists(music.getName(), "Empty Name");
             if (oldMusic.size() > 0)
                 for (Music oldMusicItem : oldMusic)
-                    if (oldMusicItem.getArtist().getId() == music.getArtist().getId())
+                    if (oldMusicItem.getAlbum().getArtist().getId() == music.getAlbum().getArtist().getId())
                         throw new RuntimeException("Music Already Exists");
 
             musicRepository.save(music);
@@ -78,7 +78,8 @@ public class MusicService {
             Validations.notExists(music.getName(), "Empty Name");
             if (oldMusic.size() > 0)
                 for (Music oldMusicItem : oldMusic)
-                    if (oldMusicItem.getId() != id && oldMusicItem.getArtist().getId() == music.getArtist().getId())
+                    if (oldMusicItem.getId() != id
+                            && oldMusicItem.getAlbum().getArtist().getId() == music.getAlbum().getArtist().getId())
                         throw new RuntimeException("Music Already Exists");
 
             music.setId(id);

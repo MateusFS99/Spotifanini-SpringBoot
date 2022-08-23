@@ -33,15 +33,13 @@ public class Music {
 
     private String release;
 
-    private String image;
-
     private String audio;
 
     @ManyToOne
     private Genre genre;
 
     @ManyToOne
-    private Artist artist;
+    private Album album;
 
     @ManyToMany(mappedBy = "musics")
     @JsonBackReference

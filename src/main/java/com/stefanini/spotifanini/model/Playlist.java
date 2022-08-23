@@ -30,6 +30,10 @@ public class Playlist {
 
     private String name;
 
+    private String description;
+
+    private String image;
+
     @ManyToMany
     @JoinTable(name = "playlist_music", joinColumns = @JoinColumn(name = "playlist_id"), inverseJoinColumns = @JoinColumn(name = "music_id"))
     private List<Music> musics;
