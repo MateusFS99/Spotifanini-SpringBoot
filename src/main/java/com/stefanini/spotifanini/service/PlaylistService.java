@@ -115,12 +115,40 @@ public class PlaylistService {
 
             Validations.notPresent(playlist, "Playlist Not Found");
             Validations.notPresent(music, "Music Not Found");
+            if (playlist.get().getMusics().contains(music.get()))
+                throw new RuntimeException("Music Already Added");
 
             playlist.get().getMusics().add(music.get());
             playlistRepository.save(playlist.get());
 
             return new ResponseEntity<String>("Music Added to the Playlist", HttpStatus.valueOf(200));
 
+        } catch (RuntimeException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
+        }
+    }
+
+    public ResponseEntity<String> removeMusic(Long playlistId, Long musicId) {
+
+        try {
+
+            Optional<Playlist> playlist = playlistRepository.findById(playlistId);
+            Optional<Music> music = musicRepository.findById(musicId);
+
+            Validations.notPresent(playlist, "Playlist Not Found");
+            Validations.notPresent(music, "Music Not Found");
+            if (!playlist.get().getMusics().contains(music.get()))
+                throw new RuntimeException("Music Doesn't Exists in The Playlist");
+
+            playlist.get().getMusics().remove(music.get());
+            playlistRepository.save(playlist.get());
+
+            return new ResponseEntity<String>("Music Removed of the Playlist", HttpStatus.valueOf(200));
+
+        } catch (RuntimeException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
         }
