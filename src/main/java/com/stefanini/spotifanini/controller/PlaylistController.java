@@ -70,18 +70,6 @@ public class PlaylistController {
         return playlistService.addMusic(playlistId, musicId);
     }
 
-    // Remove Music of Playlist
-    @ApiOperation(value = "Playlist Music", notes = "This Endpoint Removes a Music of a Playlist")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Music Removed of the Playlist"),
-            @ApiResponse(code = 500, message = "Server Side Exception"),
-            @ApiResponse(code = 400, message = "Music Doesn't Exists in The Playlist")
-    })
-    @PostMapping("/{playlistId}/removeMusic/{musicId}")
-    public ResponseEntity<String> removeMusic(@PathVariable Long playlistId, @PathVariable Long musicId) {
-        return playlistService.removeMusic(playlistId, musicId);
-    }
-
     // <-------------------- PUT METHOD -------------------->
     @ApiOperation(value = "Playlist", notes = "This Endpoint Updates a Playlist")
     @ApiResponses({
@@ -104,5 +92,17 @@ public class PlaylistController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return playlistService.delete(id);
+    }
+
+    // Remove Music of Playlist
+    @ApiOperation(value = "Playlist Music", notes = "This Endpoint Removes a Music of a Playlist")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Music Removed of the Playlist"),
+            @ApiResponse(code = 500, message = "Server Side Exception"),
+            @ApiResponse(code = 400, message = "Music Doesn't Exists in The Playlist")
+    })
+    @DeleteMapping("/{playlistId}/removeMusic/{musicId}")
+    public ResponseEntity<String> removeMusic(@PathVariable Long playlistId, @PathVariable Long musicId) {
+        return playlistService.removeMusic(playlistId, musicId);
     }
 }

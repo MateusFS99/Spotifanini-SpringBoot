@@ -114,49 +114,59 @@ public class MusicService {
         }
     }
 
-    public ResponseEntity<String> addMusic(Long musicId, Long artistId) {
+    public ResponseEntity<String> addParticipant(Long musicId, Long artistId) {
 
         try {
 
             Optional<Music> music = musicRepository.findById(musicId);
-            Optional<Artist> participant = artistRepository.findById(artistId);
+            Optional<Artist> artist = artistRepository.findById(artistId);
 
             Validations.notPresent(music, "Music Not Found");
-            Validations.notPresent(participant, "Participant Not Found");
-            if (music.get().getParticipants().contains(participant.get()))
+            Validations.notPresent(artist, "Participant Not Found");
+            if (music.get().getAlbum().getArtist() == artist.get())
+                throw new RuntimeException("This Artist is The Author of The Album");
+            if (music.get().getParticipants().contains(artist.get()))
                 throw new RuntimeException("Participant Already Added");
 
-            music.get().getParticipants().add(participant.get());
+            music.get().getParticipants().add(artist.get());
             musicRepository.save(music.get());
 
             return new ResponseEntity<String>("Participant Added to the Music", HttpStatus.valueOf(200));
 
         } catch (RuntimeException e) {
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+            if (e.getMessage().equals("Participant Already Added"))
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+            else
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(401));
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
         }
     }
 
-    public ResponseEntity<String> removeMusic(Long musicId, Long artistId) {
+    public ResponseEntity<String> removeParticipant(Long musicId, Long artistId) {
 
         try {
 
             Optional<Music> music = musicRepository.findById(musicId);
-            Optional<Artist> participant = artistRepository.findById(artistId);
+            Optional<Artist> artist = artistRepository.findById(artistId);
 
             Validations.notPresent(music, "Music Not Found");
-            Validations.notPresent(participant, "Participant Not Found");
-            if (music.get().getParticipants().contains(participant.get()))
+            Validations.notPresent(artist, "Participant Not Found");
+            if (music.get().getAlbum().getArtist() == artist.get())
+                throw new RuntimeException("The Author of The Album Cannot Be Removed");
+            if (!music.get().getParticipants().contains(artist.get()))
                 throw new RuntimeException("Participant Doesn't Exists in The Music");
 
-            music.get().getParticipants().add(participant.get());
+            music.get().getParticipants().remove(artist.get());
             musicRepository.save(music.get());
 
             return new ResponseEntity<String>("Participant Removed of the Music", HttpStatus.valueOf(200));
 
         } catch (RuntimeException e) {
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+            if (e.getMessage().equals("Participant Doesn't Exists in The Music"))
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+            else
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(401));
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
         }

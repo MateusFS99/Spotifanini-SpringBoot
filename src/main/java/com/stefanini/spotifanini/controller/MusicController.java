@@ -58,6 +58,19 @@ public class MusicController {
         return musicService.save(music);
     }
 
+    // Add Participant to Music
+    @ApiOperation(value = "Music Participant", notes = "This Endpoint Adds a Participant Artist in a Music")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Participant Added to the Music"),
+            @ApiResponse(code = 500, message = "Server Side Exception"),
+            @ApiResponse(code = 400, message = "Participant Already Added"),
+            @ApiResponse(code = 401, message = "This Artist is The Author of The Album")
+    })
+    @PostMapping("/{musicId}/addParticipant/{artistId}")
+    public ResponseEntity<String> addParticipant(@PathVariable Long musicId, @PathVariable Long artistId) {
+        return musicService.addParticipant(musicId, artistId);
+    }
+
     // <-------------------- PUT METHOD -------------------->
     @ApiOperation(value = "Music", notes = "This Endpoint Updates a Music")
     @ApiResponses({
@@ -80,5 +93,18 @@ public class MusicController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return musicService.delete(id);
+    }
+
+    // Remove Participant of Music
+    @ApiOperation(value = "Music Participant", notes = "This Endpoint Removes a Participant Artist of a Music")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Music Removed of the Playlist"),
+            @ApiResponse(code = 500, message = "Server Side Exception"),
+            @ApiResponse(code = 400, message = "Music Doesn't Exists in The Playlist"),
+            @ApiResponse(code = 401, message = "The Author of The Album Cannot Be Removed")
+    })
+    @DeleteMapping("/{musicId}/removeParticipant/{artistId}")
+    public ResponseEntity<String> removeParticipant(@PathVariable Long musicId, @PathVariable Long artistId) {
+        return musicService.removeParticipant(musicId, artistId);
     }
 }
