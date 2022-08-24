@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -40,6 +42,10 @@ public class Music {
 
     @ManyToOne
     private Album album;
+
+    @ManyToMany
+    @JoinTable(name = "music_participants", joinColumns = @JoinColumn(name = "music_id"), inverseJoinColumns = @JoinColumn(name = "artist_id"))
+    private List<Artist> participants;
 
     @ManyToMany(mappedBy = "musics")
     @JsonBackReference
