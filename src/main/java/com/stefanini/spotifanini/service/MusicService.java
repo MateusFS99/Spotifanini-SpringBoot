@@ -134,10 +134,12 @@ public class MusicService {
             return new ResponseEntity<String>("Participant Added to the Music", HttpStatus.valueOf(200));
 
         } catch (RuntimeException e) {
-            if (e.getMessage().equals("Participant Already Added"))
+            if (e.getMessage().equals("Music Not Found") || e.getMessage().equals("Participant Not Found"))
                 return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
-            else
+            if (e.getMessage().equals("This Artist is The Author of The Album"))
                 return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(401));
+            else
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(402));
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
         }
@@ -163,10 +165,12 @@ public class MusicService {
             return new ResponseEntity<String>("Participant Removed of the Music", HttpStatus.valueOf(200));
 
         } catch (RuntimeException e) {
-            if (e.getMessage().equals("Participant Doesn't Exists in The Music"))
+            if (e.getMessage().equals("Music Not Found") || e.getMessage().equals("Participant Not Found"))
                 return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
-            else
+            if (e.getMessage().equals("The Author of The Album Cannot Be Removed"))
                 return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(401));
+            else
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(402));
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
         }

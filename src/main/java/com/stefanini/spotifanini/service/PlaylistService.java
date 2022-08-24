@@ -124,7 +124,10 @@ public class PlaylistService {
             return new ResponseEntity<String>("Music Added to the Playlist", HttpStatus.valueOf(200));
 
         } catch (RuntimeException e) {
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+            if (e.getMessage().equals("Playlist Not Found") || e.getMessage().equals("Music Not Found"))
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+            else
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(401));
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
         }
@@ -148,7 +151,10 @@ public class PlaylistService {
             return new ResponseEntity<String>("Music Removed of the Playlist", HttpStatus.valueOf(200));
 
         } catch (RuntimeException e) {
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+            if (e.getMessage().equals("Playlist Not Found") || e.getMessage().equals("Music Not Found"))
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+            else
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(401));
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
         }
