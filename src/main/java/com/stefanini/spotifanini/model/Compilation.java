@@ -9,9 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +22,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Music {
+public class Compilation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,25 +30,13 @@ public class Music {
 
     private String name;
 
-    private String release;
-
-    private String audio;
-
-    @ManyToOne
-    private Genre genre;
-
-    @ManyToOne
-    private Album album;
+    private String image;
 
     @ManyToMany
-    @JoinTable(name = "music_participants", joinColumns = @JoinColumn(name = "music_id"), inverseJoinColumns = @JoinColumn(name = "artist_id"))
-    private List<Artist> participants;
+    @JoinTable(name = "compilation_artists", joinColumns = @JoinColumn(name = "compilation_id"), inverseJoinColumns = @JoinColumn(name = "artist_id"))
+    private List<Artist> artists;
 
-    @ManyToMany(mappedBy = "musics")
-    @JsonBackReference
-    private List<Playlist> playlists;
-
-    @ManyToMany(mappedBy = "musics")
-    @JsonBackReference
-    private List<Compilation> compilations;
+    @ManyToMany
+    @JoinTable(name = "compilation_musics", joinColumns = @JoinColumn(name = "compilation_id"), inverseJoinColumns = @JoinColumn(name = "music_id"))
+    private List<Music> musics;
 }

@@ -46,4 +46,8 @@ public class Artist {
     @ManyToMany(mappedBy = "participants")
     @JsonBackReference
     private List<Music> partnerships;
+
+    @ManyToMany(mappedBy = "artists")
+    @JsonBackReference
+    private List<Compilation> compilations;
 }
