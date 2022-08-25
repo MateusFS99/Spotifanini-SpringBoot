@@ -32,21 +32,21 @@ public class ArtistController {
     }
 
     // <-------------------- GET All Artists -------------------->
-    @ApiOperation(value = "Artist List", notes = "This Endpoint Provides The List of All Artists")
+    @ApiOperation(value = "Get All Artists", notes = "This Endpoint Provides The List of All Artists")
     @GetMapping
     public List<Artist> findAllArtists() {
         return artistService.findAllArtists();
     }
 
     // <-------------------- GET Artist -------------------->
-    @ApiOperation(value = "Artist", notes = "This Endpoint Provides The Artist by The ID")
+    @ApiOperation(value = "Get Artist", notes = "This Endpoint Provides The Artist by The ID")
     @GetMapping("/{id}")
     public Artist findById(@PathVariable Long id) {
         return artistService.findById(id);
     }
 
     // <------------------- POST METHOD -------------------->
-    @ApiOperation(value = "Artist", notes = "This Endpoint Saves an New Artist")
+    @ApiOperation(value = "Save Artist", notes = "This Endpoint Saves an New Artist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Artist Saved"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -59,7 +59,7 @@ public class ArtistController {
     }
 
     // <-------------------- PUT METHOD -------------------->
-    @ApiOperation(value = "Artist", notes = "This Endpoint Updates an Artist")
+    @ApiOperation(value = "Update Artist", notes = "This Endpoint Updates an Artist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Artist Updated"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -72,7 +72,7 @@ public class ArtistController {
     }
 
     // <-------------------- DELETE METHOD -------------------->
-    @ApiOperation(value = "Artist", notes = "This Endpoint Deletes an Artist")
+    @ApiOperation(value = "Delete Artist", notes = "This Endpoint Deletes an Artist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Artist Deleted"),
             @ApiResponse(code = 500, message = "Server Side Exception")

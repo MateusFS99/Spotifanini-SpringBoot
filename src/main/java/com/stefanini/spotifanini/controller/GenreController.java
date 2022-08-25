@@ -32,21 +32,21 @@ public class GenreController {
     }
 
     // <-------------------- GET All Genres -------------------->
-    @ApiOperation(value = "Genre List", notes = "This Endpoint Provides The List of All Genres")
+    @ApiOperation(value = "Get All Genres", notes = "This Endpoint Provides The List of All Genres")
     @GetMapping
     public List<Genre> findAllGenres() {
         return genreService.findAllGenres();
     }
 
     // <-------------------- GET Genre -------------------->
-    @ApiOperation(value = "Genre", notes = "This Endpoint Provides The Genre by The ID")
+    @ApiOperation(value = "Get Genre", notes = "This Endpoint Provides The Genre by The ID")
     @GetMapping("/{id}")
     public Genre findById(@PathVariable Long id) {
         return genreService.findById(id);
     }
 
     // <-------------------- POST METHOD -------------------->
-    @ApiOperation(value = "Genre", notes = "This Endpoint Saves a New Genre")
+    @ApiOperation(value = "Save Genre", notes = "This Endpoint Saves a New Genre")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Genre Saved"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -59,7 +59,7 @@ public class GenreController {
     }
 
     // <-------------------- PUT METHOD -------------------->
-    @ApiOperation(value = "Genre", notes = "This Endpoint Updates a Genre")
+    @ApiOperation(value = "Update Genre", notes = "This Endpoint Updates a Genre")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Genre Updated"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -72,7 +72,7 @@ public class GenreController {
     }
 
     // <-------------------- DELETE METHOD -------------------->
-    @ApiOperation(value = "Genre", notes = "This Endpoint Deletes a Genre")
+    @ApiOperation(value = "Delete Genre", notes = "This Endpoint Deletes a Genre")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Genre Deleted"),
             @ApiResponse(code = 500, message = "Server Side Exception")

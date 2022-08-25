@@ -32,21 +32,21 @@ public class AlbumController {
     }
 
     // <-------------------- GET All Albums -------------------->
-    @ApiOperation(value = "Album List", notes = "This Endpoint Provides The List of All Albums")
+    @ApiOperation(value = "Get All Albuns", notes = "This Endpoint Provides The List of All Albums")
     @GetMapping
     public List<Album> findAllAlbums() {
         return albumService.findAllAlbums();
     }
 
     // <-------------------GET Album -------------------->
-    @ApiOperation(value = "Album", notes = "This Endpoint Provides The Album by The ID")
+    @ApiOperation(value = "Get Album", notes = "This Endpoint Provides The Album by The ID")
     @GetMapping("/{id}")
     public Album findById(@PathVariable Long id) {
         return albumService.findById(id);
     }
 
     // <-------------------- POST METHOD -------------------->
-    @ApiOperation(value = "Album", notes = "This Endpoint Saves an New Album")
+    @ApiOperation(value = "Save Album", notes = "This Endpoint Saves an New Album")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Album Saved"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -59,7 +59,7 @@ public class AlbumController {
     }
 
     // <-------------------- PUT METHOD -------------------->
-    @ApiOperation(value = "Album", notes = "This Endpoint Updates an Album")
+    @ApiOperation(value = "Update Album", notes = "This Endpoint Updates an Album")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Album Updated"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -72,7 +72,7 @@ public class AlbumController {
     }
 
     // <-------------------- DELETE METHOD -------------------->
-    @ApiOperation(value = "Album", notes = "This Endpoint Deletes an Album")
+    @ApiOperation(value = "Delete Album", notes = "This Endpoint Deletes an Album")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Album Deleted"),
             @ApiResponse(code = 500, message = "Server Side Exception")

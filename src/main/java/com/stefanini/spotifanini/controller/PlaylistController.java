@@ -32,21 +32,21 @@ public class PlaylistController {
     }
 
     // <-------------------- GET All Playlists -------------------->
-    @ApiOperation(value = "Playlist List", notes = "This Endpoint Provides The List of All Playlists")
+    @ApiOperation(value = "Get All Playlists", notes = "This Endpoint Provides The List of All Playlists")
     @GetMapping
     public List<Playlist> findAllPlaylists() {
         return playlistService.findAllPlaylists();
     }
 
     // <-------------------- GET Playlist -------------------->
-    @ApiOperation(value = "Playlist", notes = "This Endpoint Provides The Playlist by The ID")
+    @ApiOperation(value = "Get Playlist", notes = "This Endpoint Provides The Playlist by The ID")
     @GetMapping("/{id}")
     public Playlist findById(@PathVariable Long id) {
         return playlistService.findById(id);
     }
 
     // <------------------- POST METHODS -------------------->
-    @ApiOperation(value = "Playlist", notes = "This Endpoint Saves a New Playlist")
+    @ApiOperation(value = "Save Playlist", notes = "This Endpoint Saves a New Playlist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Playlist Saved"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -59,7 +59,7 @@ public class PlaylistController {
     }
 
     // Add Music to Playlist
-    @ApiOperation(value = "Playlist Music", notes = "This Endpoint Adds a Music in a Playlist")
+    @ApiOperation(value = "Add Music to Playlist", notes = "This Endpoint Adds a Music in a Playlist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Added to the Playlist"),
             @ApiResponse(code = 500, message = "Server Side Exception"),
@@ -73,7 +73,7 @@ public class PlaylistController {
     }
 
     // <-------------------- PUT METHOD -------------------->
-    @ApiOperation(value = "Playlist", notes = "This Endpoint Updates a Playlist")
+    @ApiOperation(value = "Update Playlist", notes = "This Endpoint Updates a Playlist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Playlist Updated"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -86,7 +86,7 @@ public class PlaylistController {
     }
 
     // <-------------------- DELETE METHOD -------------------->
-    @ApiOperation(value = "Playlist", notes = "This Endpoint Deletes a Playlist")
+    @ApiOperation(value = "Delete Playlist", notes = "This Endpoint Deletes a Playlist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Playlist Deleted"),
             @ApiResponse(code = 500, message = "Server Side Exception")
@@ -97,7 +97,7 @@ public class PlaylistController {
     }
 
     // Remove Music of Playlist
-    @ApiOperation(value = "Playlist Music", notes = "This Endpoint Removes a Music of a Playlist")
+    @ApiOperation(value = "Remove Music from Playlist", notes = "This Endpoint Removes a Music from a Playlist")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Removed to the Playlist"),
             @ApiResponse(code = 500, message = "Server Side Exception"),

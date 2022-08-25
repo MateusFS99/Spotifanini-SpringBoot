@@ -32,21 +32,21 @@ public class MusicController {
     }
 
     // <-------------------- GET All Musics -------------------->
-    @ApiOperation(value = "Music List", notes = "This Endpoint Provides The List of All Musics")
+    @ApiOperation(value = "Get All Musics", notes = "This Endpoint Provides The List of All Musics")
     @GetMapping
     public List<Music> findAllMusics() {
         return musicService.findAllMusics();
     }
 
     // <-------------------GET Music -------------------->
-    @ApiOperation(value = "Music", notes = "This Endpoint Provides The Music by The ID")
+    @ApiOperation(value = "Get Music", notes = "This Endpoint Provides The Music by The ID")
     @GetMapping("/{id}")
     public Music findById(@PathVariable Long id) {
         return musicService.findById(id);
     }
 
     // <-------------------- POST METHOD -------------------->
-    @ApiOperation(value = "Music", notes = "This Endpoint Saves a New Music")
+    @ApiOperation(value = "Save Music", notes = "This Endpoint Saves a New Music")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Saved"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -58,23 +58,8 @@ public class MusicController {
         return musicService.save(music);
     }
 
-    // Add Participant to Music
-    @ApiOperation(value = "Music Participant", notes = "This Endpoint Adds a Participant Artist in a Music")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Participant Added to the Music"),
-            @ApiResponse(code = 500, message = "Server Side Exception"),
-            @ApiResponse(code = 400, message = "This Artist is The Author of The Album"),
-            @ApiResponse(code = 401, message = "Participant Already Added"),
-            @ApiResponse(code = 404, message = "Music Not Found"),
-            @ApiResponse(code = 405, message = "Participant Not Found")
-    })
-    @PostMapping("/{musicId}/addParticipant/{artistId}")
-    public ResponseEntity<String> addParticipant(@PathVariable Long musicId, @PathVariable Long artistId) {
-        return musicService.addParticipant(musicId, artistId);
-    }
-
     // <-------------------- PUT METHOD -------------------->
-    @ApiOperation(value = "Music", notes = "This Endpoint Updates a Music")
+    @ApiOperation(value = "Update Music", notes = "This Endpoint Updates a Music")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Updated"),
             @ApiResponse(code = 400, message = "Empty Name"),
@@ -87,7 +72,7 @@ public class MusicController {
     }
 
     // <-------------------- DELETE METHOD -------------------->
-    @ApiOperation(value = "Music", notes = "This Endpoint Deletes a Music")
+    @ApiOperation(value = "Delete Music", notes = "This Endpoint Deletes a Music")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Deleted"),
             @ApiResponse(code = 500, message = "Server Side Exception")
@@ -95,20 +80,5 @@ public class MusicController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return musicService.delete(id);
-    }
-
-    // Remove Participant of Music
-    @ApiOperation(value = "Music Participant", notes = "This Endpoint Removes a Participant Artist of a Music")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Music Removed of the Playlist"),
-            @ApiResponse(code = 500, message = "Server Side Exception"),
-            @ApiResponse(code = 400, message = "The Author of The Album Cannot Be Removed"),
-            @ApiResponse(code = 401, message = "Participant Doesn't Exists in The Music"),
-            @ApiResponse(code = 404, message = "Music Not Found"),
-            @ApiResponse(code = 405, message = "Participant Not Found")
-    })
-    @DeleteMapping("/{musicId}/removeParticipant/{artistId}")
-    public ResponseEntity<String> removeParticipant(@PathVariable Long musicId, @PathVariable Long artistId) {
-        return musicService.removeParticipant(musicId, artistId);
     }
 }
