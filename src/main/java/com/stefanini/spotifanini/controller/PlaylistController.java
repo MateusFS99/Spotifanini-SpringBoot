@@ -63,7 +63,9 @@ public class PlaylistController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Added to the Playlist"),
             @ApiResponse(code = 500, message = "Server Side Exception"),
-            @ApiResponse(code = 400, message = "Music Already Added")
+            @ApiResponse(code = 400, message = "Music Already Added"),
+            @ApiResponse(code = 404, message = "Playlist Not Found"),
+            @ApiResponse(code = 405, message = "Music Not Found")
     })
     @PostMapping("/{playlistId}/addMusic/{musicId}")
     public ResponseEntity<String> addMusic(@PathVariable Long playlistId, @PathVariable Long musicId) {
@@ -97,9 +99,11 @@ public class PlaylistController {
     // Remove Music of Playlist
     @ApiOperation(value = "Playlist Music", notes = "This Endpoint Removes a Music of a Playlist")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Music Removed of the Playlist"),
+            @ApiResponse(code = 200, message = "Music Removed to the Playlist"),
             @ApiResponse(code = 500, message = "Server Side Exception"),
-            @ApiResponse(code = 400, message = "Music Doesn't Exists in The Playlist")
+            @ApiResponse(code = 400, message = "Music Doesn't Exists in The Playlist"),
+            @ApiResponse(code = 404, message = "Playlist Not Found"),
+            @ApiResponse(code = 405, message = "Music Not Found")
     })
     @DeleteMapping("/{playlistId}/removeMusic/{musicId}")
     public ResponseEntity<String> removeMusic(@PathVariable Long playlistId, @PathVariable Long musicId) {

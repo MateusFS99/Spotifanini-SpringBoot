@@ -10,6 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.stefanini.spotifanini.util.EntityIdResolver;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,6 +26,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", resolver = EntityIdResolver.class, scope = Compilation.class)
 public class Compilation {
 
     @Id
@@ -34,9 +39,9 @@ public class Compilation {
 
     @ManyToMany
     @JoinTable(name = "compilation_artists", joinColumns = @JoinColumn(name = "compilation_id"), inverseJoinColumns = @JoinColumn(name = "artist_id"))
-    private List<Artist> artists;
+    private List<Artist> compilationArtists;
 
     @ManyToMany
     @JoinTable(name = "compilation_musics", joinColumns = @JoinColumn(name = "compilation_id"), inverseJoinColumns = @JoinColumn(name = "music_id"))
-    private List<Music> musics;
+    private List<Music> compilationMusics;
 }

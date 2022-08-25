@@ -30,10 +30,10 @@ public class CompilationService {
 
         List<Artist> list = new ArrayList<>();
 
-        for (Music music : compilation.getMusics())
+        for (Music music : compilation.getCompilationMusics())
             list.add(music.getAlbum().getArtist());
-        compilation.getArtists().clear();
-        compilation.setArtists(list);
+        compilation.getCompilationArtists().clear();
+        compilation.setCompilationArtists(list);
     }
 
     public List<Compilation> findAllCompilations() {
@@ -118,20 +118,22 @@ public class CompilationService {
 
             Validations.notPresent(compilation, "Compilation Not Found");
             Validations.notPresent(music, "Music Not Found");
-            if (compilation.get().getMusics().contains(music.get()))
+            if (compilation.get().getCompilationMusics().contains(music.get()))
                 throw new RuntimeException("Music Already Added");
 
-            compilation.get().getMusics().add(music.get());
-            compilation.get().getArtists().add(music.get().getAlbum().getArtist());
+            compilation.get().getCompilationMusics().add(music.get());
+            compilation.get().getCompilationArtists().add(music.get().getAlbum().getArtist());
             compilationRepository.save(compilation.get());
 
             return new ResponseEntity<String>("Music Added to the Compilation", HttpStatus.valueOf(200));
 
         } catch (RuntimeException e) {
-            if (e.getMessage().equals("Compilation Not Found") || e.getMessage().equals("Music Not Found"))
-                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+            if (e.getMessage().equals("Compilation Not Found"))
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(404));
+            else if (e.getMessage().equals("Music Not Found"))
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(405));
             else
-                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(401));
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
         }
@@ -146,20 +148,22 @@ public class CompilationService {
 
             Validations.notPresent(compilation, "Compilation Not Found");
             Validations.notPresent(music, "Music Not Found");
-            if (!compilation.get().getMusics().contains(music.get()))
+            if (!compilation.get().getCompilationMusics().contains(music.get()))
                 throw new RuntimeException("Music Doesn't Exists in The Compilation");
 
-            compilation.get().getMusics().remove(music.get());
-            compilation.get().getArtists().remove(music.get().getAlbum().getArtist());
+            compilation.get().getCompilationMusics().remove(music.get());
+            compilation.get().getCompilationArtists().remove(music.get().getAlbum().getArtist());
             compilationRepository.save(compilation.get());
 
             return new ResponseEntity<String>("Music Removed of the Compilation", HttpStatus.valueOf(200));
 
         } catch (RuntimeException e) {
-            if (e.getMessage().equals("Compilation Not Found") || e.getMessage().equals("Music Not Found"))
-                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+            if (e.getMessage().equals("Compilation Not Found"))
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(404));
+            else if (e.getMessage().equals("Music Not Found"))
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(405));
             else
-                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(401));
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
         }

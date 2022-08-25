@@ -63,8 +63,10 @@ public class MusicController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "Participant Added to the Music"),
             @ApiResponse(code = 500, message = "Server Side Exception"),
-            @ApiResponse(code = 400, message = "Participant Already Added"),
-            @ApiResponse(code = 401, message = "This Artist is The Author of The Album")
+            @ApiResponse(code = 400, message = "This Artist is The Author of The Album"),
+            @ApiResponse(code = 401, message = "Participant Already Added"),
+            @ApiResponse(code = 404, message = "Music Not Found"),
+            @ApiResponse(code = 405, message = "Participant Not Found")
     })
     @PostMapping("/{musicId}/addParticipant/{artistId}")
     public ResponseEntity<String> addParticipant(@PathVariable Long musicId, @PathVariable Long artistId) {
@@ -100,8 +102,10 @@ public class MusicController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "Music Removed of the Playlist"),
             @ApiResponse(code = 500, message = "Server Side Exception"),
-            @ApiResponse(code = 400, message = "Music Doesn't Exists in The Playlist"),
-            @ApiResponse(code = 401, message = "The Author of The Album Cannot Be Removed")
+            @ApiResponse(code = 400, message = "The Author of The Album Cannot Be Removed"),
+            @ApiResponse(code = 401, message = "Participant Doesn't Exists in The Music"),
+            @ApiResponse(code = 404, message = "Music Not Found"),
+            @ApiResponse(code = 405, message = "Participant Not Found")
     })
     @DeleteMapping("/{musicId}/removeParticipant/{artistId}")
     public ResponseEntity<String> removeParticipant(@PathVariable Long musicId, @PathVariable Long artistId) {
