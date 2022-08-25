@@ -54,6 +54,7 @@ public class MusicService {
             List<Music> oldMusic = musicRepository.findByName(music.getName());
 
             Validations.notExists(music.getName(), "Empty Name");
+            Validations.notExists(music.getAlbum(), "Empty Album");
             if (oldMusic.size() > 0)
                 for (Music oldMusicItem : oldMusic)
                     if (oldMusicItem.getAlbum().getArtist().getId() == music.getAlbum().getArtist().getId())
@@ -64,7 +65,7 @@ public class MusicService {
             return new ResponseEntity<String>("Music Saved", HttpStatus.valueOf(200));
 
         } catch (RuntimeException e) {
-            if (e.getMessage().equals("Empty Name"))
+            if (e.getMessage().equals("Empty Name") || e.getMessage().equals("Empty Album"))
                 return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
             else
                 return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(401));
@@ -80,6 +81,7 @@ public class MusicService {
             List<Music> oldMusic = musicRepository.findByName(music.getName());
 
             Validations.notExists(music.getName(), "Empty Name");
+            Validations.notExists(music.getAlbum(), "Empty Album");
             if (oldMusic.size() > 0)
                 for (Music oldMusicItem : oldMusic)
                     if (oldMusicItem.getId() != id
@@ -92,7 +94,7 @@ public class MusicService {
             return new ResponseEntity<String>("Music Updated", HttpStatus.valueOf(200));
 
         } catch (RuntimeException e) {
-            if (e.getMessage().equals("Empty Name"))
+            if (e.getMessage().equals("Empty Name") || e.getMessage().equals("Empty Album"))
                 return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
             else
                 return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(401));

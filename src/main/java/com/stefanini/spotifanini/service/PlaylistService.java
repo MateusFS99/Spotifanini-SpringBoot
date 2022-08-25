@@ -115,10 +115,10 @@ public class PlaylistService {
 
             Validations.notPresent(playlist, "Playlist Not Found");
             Validations.notPresent(music, "Music Not Found");
-            if (playlist.get().getPlaylistMusics().contains(music.get()))
+            if (playlist.get().getMusics().contains(music.get()))
                 throw new RuntimeException("Music Already Added");
 
-            playlist.get().getPlaylistMusics().add(music.get());
+            playlist.get().getMusics().add(music.get());
             playlistRepository.save(playlist.get());
 
             return new ResponseEntity<String>("Music Added to the Playlist", HttpStatus.valueOf(200));
@@ -144,10 +144,10 @@ public class PlaylistService {
 
             Validations.notPresent(playlist, "Playlist Not Found");
             Validations.notPresent(music, "Music Not Found");
-            if (!playlist.get().getPlaylistMusics().contains(music.get()))
+            if (!playlist.get().getMusics().contains(music.get()))
                 throw new RuntimeException("Music Doesn't Exists in The Playlist");
 
-            playlist.get().getPlaylistMusics().remove(music.get());
+            playlist.get().getMusics().remove(music.get());
             playlistRepository.save(playlist.get());
 
             return new ResponseEntity<String>("Music Removed of the Playlist", HttpStatus.valueOf(200));
@@ -158,7 +158,7 @@ public class PlaylistService {
             else if (e.getMessage().equals("Music Not Found"))
                 return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(405));
             else
-                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(400));
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(401));
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
         }

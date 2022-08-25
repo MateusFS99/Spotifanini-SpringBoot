@@ -13,8 +13,8 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.stefanini.spotifanini.util.EntityIdResolver;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +28,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", resolver = EntityIdResolver.class, scope = Music.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Music {
 
     @Id
@@ -41,21 +41,20 @@ public class Music {
 
     private String audio;
 
+    @JsonManagedReference(value = "music_genre")
     @ManyToOne
     private Genre genre;
 
+    @JsonManagedReference(value = "music_album")
     @ManyToOne
     private Album album;
 
+    @JsonManagedReference(value = "music_participants")
     @ManyToMany
     @JoinTable(name = "music_participants", joinColumns = @JoinColumn(name = "music_id"), inverseJoinColumns = @JoinColumn(name = "artist_id"))
     private List<Artist> participants;
 
-    @ManyToMany(mappedBy = "playlistMusics")
-    @JsonBackReference
+    @JsonBackReference(value = "playlist_musics")
+    @ManyToMany(mappedBy = "musics")
     private List<Playlist> playlists;
-
-    @ManyToMany(mappedBy = "compilationMusics")
-    @JsonBackReference
-    private List<Compilation> compilations;
 }
