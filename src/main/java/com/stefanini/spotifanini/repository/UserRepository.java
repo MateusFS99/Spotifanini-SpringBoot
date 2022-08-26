@@ -8,5 +8,5 @@ import com.stefanini.spotifanini.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByUsername(String name);
+    Optional<User> findByUsername(String username);
 }
