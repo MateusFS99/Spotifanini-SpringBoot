@@ -1,5 +1,3 @@
-[![Updated Badge](https://badges.pufler.dev/updated/MateusFS99/Spotifanini-SpringBoot)](https://github.com/MateusFS99/Spotifanini-SpringBoot/commits/main)
-
 <h1 align="center">🎶 Spotifanini - Spotify Clone 🎶</h1>
 
 ## About 🎯
