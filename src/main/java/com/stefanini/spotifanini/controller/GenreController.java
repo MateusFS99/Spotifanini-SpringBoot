@@ -1,6 +1,8 @@
 package com.stefanini.spotifanini.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -36,6 +38,7 @@ public class GenreController {
     // <-------------------- GET All Genres -------------------->
     @ApiOperation(value = "Get All Genres", notes = "This Endpoint Provides The List of All Genres With Pagination")
     @GetMapping
+    @Cacheable(value = "genresList")
     public Page<Genre> findAllGenres(
             @PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 20) Pageable pagination) {
         return genreService.findAllGenres(pagination);
@@ -44,6 +47,7 @@ public class GenreController {
     // <-------------------- GET Genre -------------------->
     @ApiOperation(value = "Get Genre", notes = "This Endpoint Provides The Genre by The ID")
     @GetMapping("/{id}")
+    @Cacheable(value = "genresList")
     public Genre findById(@PathVariable Long id) {
         return genreService.findById(id);
     }
@@ -57,6 +61,7 @@ public class GenreController {
             @ApiResponse(code = 500, message = "Server Side Exception")
     })
     @PostMapping
+    @CacheEvict(value = "genresList", allEntries = true)
     public ResponseEntity<String> save(@RequestBody Genre genre) {
         return genreService.save(genre);
     }
@@ -70,6 +75,7 @@ public class GenreController {
             @ApiResponse(code = 500, message = "Server Side Exception")
     })
     @PutMapping("/{id}")
+    @CacheEvict(value = "genresList", allEntries = true)
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Genre genre) {
         return genreService.update(id, genre);
     }
@@ -81,6 +87,7 @@ public class GenreController {
             @ApiResponse(code = 500, message = "Server Side Exception")
     })
     @DeleteMapping("/{id}")
+    @CacheEvict(value = "genresList", allEntries = true)
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return genreService.delete(id);
     }
