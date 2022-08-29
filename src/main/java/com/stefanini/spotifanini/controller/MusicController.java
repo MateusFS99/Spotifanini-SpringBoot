@@ -1,8 +1,7 @@
 package com.stefanini.spotifanini.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stefanini.spotifanini.model.Music;
@@ -32,10 +32,10 @@ public class MusicController {
     }
 
     // <-------------------- GET All Musics -------------------->
-    @ApiOperation(value = "Get All Musics", notes = "This Endpoint Provides The List of All Musics")
+    @ApiOperation(value = "Get All Musics", notes = "This Endpoint Provides The List of All Musics With Pagination")
     @GetMapping
-    public List<Music> findAllMusics() {
-        return musicService.findAllMusics();
+    public Page<Music> findAllMusics(@RequestParam int page, @RequestParam int size) {
+        return musicService.findAllMusics(page, size);
     }
 
     // <-------------------GET Music -------------------->
