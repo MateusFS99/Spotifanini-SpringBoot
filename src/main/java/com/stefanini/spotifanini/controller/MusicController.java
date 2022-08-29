@@ -2,6 +2,9 @@ package com.stefanini.spotifanini.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +37,9 @@ public class MusicController {
     // <-------------------- GET All Musics -------------------->
     @ApiOperation(value = "Get All Musics", notes = "This Endpoint Provides The List of All Musics With Pagination")
     @GetMapping
-    public Page<Music> findAllMusics(@RequestParam int page, @RequestParam int size) {
-        return musicService.findAllMusics(page, size);
+    public Page<Music> findAllMusics(@RequestParam int page,
+            @PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 20) Pageable pagination) {
+        return musicService.findAllMusics(pagination);
     }
 
     // <-------------------GET Music -------------------->
