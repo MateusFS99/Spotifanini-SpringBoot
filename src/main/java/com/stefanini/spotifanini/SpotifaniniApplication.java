@@ -13,5 +13,4 @@ public class SpotifaniniApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpotifaniniApplication.class, args);
 	}
-
 }

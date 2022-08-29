@@ -40,6 +40,8 @@ public class User {
 
     private String password;
 
+    private Boolean admin;
+
     @OneToMany(mappedBy = "user")
     @JsonBackReference
     private List<Playlist> playlists;
