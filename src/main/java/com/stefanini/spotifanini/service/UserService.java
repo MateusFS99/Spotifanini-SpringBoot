@@ -1,8 +1,9 @@
 package com.stefanini.spotifanini.service;
 
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> findAllUsers() {
+    public Page<User> findAllUsers(Pageable pagination) {
 
         try {
-            return userRepository.findAll();
+            return userRepository.findAll(pagination);
         } catch (Exception e) {
             throw e;
         }

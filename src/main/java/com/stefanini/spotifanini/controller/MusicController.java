@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stefanini.spotifanini.model.Music;
@@ -37,7 +36,7 @@ public class MusicController {
     // <-------------------- GET All Musics -------------------->
     @ApiOperation(value = "Get All Musics", notes = "This Endpoint Provides The List of All Musics With Pagination")
     @GetMapping
-    public Page<Music> findAllMusics(@RequestParam int page,
+    public Page<Music> findAllMusics(
             @PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 20) Pageable pagination) {
         return musicService.findAllMusics(pagination);
     }

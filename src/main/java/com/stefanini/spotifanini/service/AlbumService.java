@@ -3,6 +3,8 @@ package com.stefanini.spotifanini.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,10 +22,10 @@ public class AlbumService {
         this.albumRepository = albumRepository;
     }
 
-    public List<Album> findAllAlbums() {
+    public Page<Album> findAllAlbums(Pageable pagination) {
 
         try {
-            return albumRepository.findAll();
+            return albumRepository.findAll(pagination);
         } catch (Exception e) {
             throw e;
         }

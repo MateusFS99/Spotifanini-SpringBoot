@@ -1,8 +1,10 @@
 package com.stefanini.spotifanini.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,10 +34,11 @@ public class AlbumController {
     }
 
     // <-------------------- GET All Albums -------------------->
-    @ApiOperation(value = "Get All Albuns", notes = "This Endpoint Provides The List of All Albums")
+    @ApiOperation(value = "Get All Albuns", notes = "This Endpoint Provides The List of All Albums With Pagination")
     @GetMapping
-    public List<Album> findAllAlbums() {
-        return albumService.findAllAlbums();
+    public Page<Album> findAllAlbums(
+            @PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 20) Pageable pagination) {
+        return albumService.findAllAlbums(pagination);
     }
 
     // <-------------------GET Album -------------------->
