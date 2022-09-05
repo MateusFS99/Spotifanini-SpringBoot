@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch SecurityConfigurations",
+            "request": "launch",
+            "mainClass": "com.stefanini.spotifanini.config.security.SecurityConfigurations",
+            "projectName": "spotifanini"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-SpotifaniniApplication<spotifanini>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

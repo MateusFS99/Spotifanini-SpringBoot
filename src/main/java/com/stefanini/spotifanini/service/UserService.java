@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.stefanini.spotifanini.model.User;
@@ -52,6 +53,7 @@ public class UserService {
             Validations.notExists(user.getPassword(), "Empty Password");
             Validations.isPresent(userRepository.findByUsername(user.getUsername()), "User Already Exists");
 
+            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             userRepository.save(user);
 
             return new ResponseEntity<String>("User Saved", HttpStatus.valueOf(200));
@@ -78,6 +80,7 @@ public class UserService {
                 Validations.isPresent(oldUser, "User Already Exists");
 
             user.setId(id);
+            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             userRepository.save(user);
 
             return new ResponseEntity<String>("User Updated", HttpStatus.valueOf(200));
