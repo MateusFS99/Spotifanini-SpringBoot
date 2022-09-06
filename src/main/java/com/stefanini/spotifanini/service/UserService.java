@@ -1,12 +1,18 @@
 package com.stefanini.spotifanini.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import com.stefanini.spotifanini.model.User;
@@ -14,7 +20,7 @@ import com.stefanini.spotifanini.repository.UserRepository;
 import com.stefanini.spotifanini.util.Validations;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -53,7 +59,6 @@ public class UserService {
             Validations.notExists(user.getPassword(), "Empty Password");
             Validations.isPresent(userRepository.findByUsername(user.getUsername()), "User Already Exists");
 
-            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             userRepository.save(user);
 
             return new ResponseEntity<String>("User Saved", HttpStatus.valueOf(200));
@@ -68,19 +73,21 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<String> update(Long id, User user) {
+    public ResponseEntity<String> update(Long id, User user, String authorization) {
 
         try {
 
-            Optional<User> oldUser = userRepository.findByUsername(user.getUsername());
+            Optional<User> dbUser = userRepository.findByUsername(user.getUsername());
 
             Validations.notExists(user.getUsername(), "Empty Username");
             Validations.notExists(user.getPassword(), "Empty Password");
-            if (oldUser.isPresent() && oldUser.get().getId() != id)
-                Validations.isPresent(oldUser, "User Already Exists");
+            if (dbUser.isPresent() && dbUser.get().getId() != id)
+                Validations.isPresent(dbUser, "User Already Exists");
+            else
+                Validations.notOwner(dbUser.get(), authorization, "Unauthorized");
 
             user.setId(id);
-            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+            user.setPassword(encryptPassword(user.getPassword()));
             userRepository.save(user);
 
             return new ResponseEntity<String>("User Updated", HttpStatus.valueOf(200));
@@ -106,5 +113,31 @@ public class UserService {
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.valueOf(500));
         }
+    }
+
+    public String encryptPassword(String password) {
+
+        String salt = BCrypt.gensalt(10);
+        String passEncoded = BCrypt.hashpw(password, salt);
+
+        return passEncoded;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        Optional<User> user = userRepository.findByUsername(username);
+
+        if (!user.isPresent())
+            throw new UsernameNotFoundException("User not found");
+
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+        authorities.add(new SimpleGrantedAuthority("USER"));
+        if (user.get().getAdmin())
+            authorities.add(new SimpleGrantedAuthority("ADMIN"));
+
+        return new org.springframework.security.core.userdetails.User(user.get().getUsername(),
+                user.get().getPassword(), authorities);
     }
 }

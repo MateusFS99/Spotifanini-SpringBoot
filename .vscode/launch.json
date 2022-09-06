@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch UserService",
+            "request": "launch",
+            "mainClass": "com.stefanini.spotifanini.service.UserService",
+            "projectName": "spotifanini"
+        },
+        {
+            "type": "java",
             "name": "Launch SecurityConfigurations",
             "request": "launch",
             "mainClass": "com.stefanini.spotifanini.config.security.SecurityConfigurations",
