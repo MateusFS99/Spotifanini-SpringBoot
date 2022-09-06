@@ -50,11 +50,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         User user = (User) authentication.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         Date now = new Date(System.currentTimeMillis());
-        Date twoHours = new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 2));
+        Date tomorow = new Date(System.currentTimeMillis() + 86400000);
         String token = JWT.create()
                 .withSubject(user.getUsername())
                 .withIssuedAt(now)
-                .withExpiresAt(twoHours)
+                .withExpiresAt(tomorow)
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles",
                         user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))

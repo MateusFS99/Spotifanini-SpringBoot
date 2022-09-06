@@ -15,10 +15,6 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 @EnableSpringDataWebSupport
 @EnableCaching
 public class SpotifaniniApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(SpotifaniniApplication.class, args);
-	}
 	
 	@Bean
 	BCryptPasswordEncoder passwordEncoder() {
@@ -30,5 +26,9 @@ public class SpotifaniniApplication {
 
 		return new OpenAPI().components(new Components().addSecuritySchemes("bearer-key",
 				new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
+	}
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpotifaniniApplication.class, args);
 	}
 }
