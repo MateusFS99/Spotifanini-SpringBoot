@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.stefanini.spotifanini.model.Genre;
 import com.stefanini.spotifanini.service.GenreService;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/genre")
@@ -36,7 +36,7 @@ public class GenreController {
     }
 
     // <-------------------- GET All Genres -------------------->
-    @ApiOperation(value = "Get All Genres", notes = "This Endpoint Provides The List of All Genres With Pagination")
+    @Operation(summary = "Get All Genres", description = "This Endpoint Provides The List of All Genres With Pagination")
     @GetMapping
     @Cacheable(value = "genresList")
     public Page<Genre> findAllGenres(
@@ -45,7 +45,7 @@ public class GenreController {
     }
 
     // <-------------------- GET Genre -------------------->
-    @ApiOperation(value = "Get Genre", notes = "This Endpoint Provides The Genre by The ID")
+    @Operation(summary = "Get Genre", description = "This Endpoint Provides The Genre by The ID")
     @GetMapping("/{id}")
     @Cacheable(value = "genresList")
     public Genre findById(@PathVariable Long id) {
@@ -53,12 +53,12 @@ public class GenreController {
     }
 
     // <-------------------- POST METHOD -------------------->
-    @ApiOperation(value = "Save Genre", notes = "This Endpoint Saves a New Genre")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Genre Saved"),
-            @ApiResponse(code = 400, message = "Empty Name"),
-            @ApiResponse(code = 401, message = "Genre Already Exists"),
-            @ApiResponse(code = 500, message = "Server Side Exception")
+    @Operation(summary = "Save Genre", description = "This Endpoint Saves a New Genre")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Genre Saved"),
+            @ApiResponse(responseCode = "400", description = "Empty Name"),
+            @ApiResponse(responseCode = "401", description = "Genre Already Exists"),
+            @ApiResponse(responseCode = "500", description = "Server Side Exception")
     })
     @PostMapping
     @CacheEvict(value = "genresList", allEntries = true)
@@ -67,12 +67,12 @@ public class GenreController {
     }
 
     // <-------------------- PUT METHOD -------------------->
-    @ApiOperation(value = "Update Genre", notes = "This Endpoint Updates a Genre")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Genre Updated"),
-            @ApiResponse(code = 400, message = "Empty Name"),
-            @ApiResponse(code = 401, message = "Genre Already Exists"),
-            @ApiResponse(code = 500, message = "Server Side Exception")
+    @Operation(summary = "Update Genre", description = "This Endpoint Updates a Genre")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Genre Updated"),
+            @ApiResponse(responseCode = "400", description = "Empty Name"),
+            @ApiResponse(responseCode = "401", description = "Genre Already Exists"),
+            @ApiResponse(responseCode = "500", description = "Server Side Exception")
     })
     @PutMapping("/{id}")
     @CacheEvict(value = "genresList", allEntries = true)
@@ -81,10 +81,10 @@ public class GenreController {
     }
 
     // <-------------------- DELETE METHOD -------------------->
-    @ApiOperation(value = "Delete Genre", notes = "This Endpoint Deletes a Genre")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Genre Deleted"),
-            @ApiResponse(code = 500, message = "Server Side Exception")
+    @Operation(summary = "Delete Genre", description = "This Endpoint Deletes a Genre")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Genre Deleted"),
+            @ApiResponse(responseCode = "500", description = "Server Side Exception")
     })
     @DeleteMapping("/{id}")
     @CacheEvict(value = "genresList", allEntries = true)

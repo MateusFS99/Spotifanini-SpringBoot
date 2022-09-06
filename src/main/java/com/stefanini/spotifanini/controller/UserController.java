@@ -79,7 +79,7 @@ public class UserController {
     }
 
     // <-------------------- DELETE METHOD -------------------->
-    @Operation(summary = "Delete User", description = "Only admin users can use this endpoint", security = {
+    @Operation(summary = "Delete User", description = "Only Admin Users Can Use This Endpoint", security = {
             @SecurityRequirement(name = "Bearer") })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User Deleted"),

@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.stefanini.spotifanini.model.Album;
 import com.stefanini.spotifanini.service.AlbumService;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/album")
@@ -34,7 +34,7 @@ public class AlbumController {
     }
 
     // <-------------------- GET All Albums -------------------->
-    @ApiOperation(value = "Get All Albuns", notes = "This Endpoint Provides The List of All Albums With Pagination")
+    @Operation(summary = "Get All Albuns", description = "This Endpoint Provides The List of All Albums With Pagination")
     @GetMapping
     public Page<Album> findAllAlbums(
             @PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 20) Pageable pagination) {
@@ -42,19 +42,19 @@ public class AlbumController {
     }
 
     // <-------------------GET Album -------------------->
-    @ApiOperation(value = "Get Album", notes = "This Endpoint Provides The Album by The ID")
+    @Operation(summary = "Get Album", description = "This Endpoint Provides The Album by The ID")
     @GetMapping("/{id}")
     public Album findById(@PathVariable Long id) {
         return albumService.findById(id);
     }
 
     // <-------------------- POST METHOD -------------------->
-    @ApiOperation(value = "Save Album", notes = "This Endpoint Saves an New Album")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Album Saved"),
-            @ApiResponse(code = 400, message = "Empty Name"),
-            @ApiResponse(code = 401, message = "Album Already Exists"),
-            @ApiResponse(code = 500, message = "Server Side Exception")
+    @Operation(summary = "Save Album", description = "This Endpoint Saves an New Album")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Album Saved"),
+            @ApiResponse(responseCode = "400", description = "Empty Name"),
+            @ApiResponse(responseCode = "401", description = "Album Already Exists"),
+            @ApiResponse(responseCode = "500", description = "Server Side Exception")
     })
     @PostMapping
     public ResponseEntity<String> save(@RequestBody Album album) {
@@ -62,12 +62,12 @@ public class AlbumController {
     }
 
     // <-------------------- PUT METHOD -------------------->
-    @ApiOperation(value = "Update Album", notes = "This Endpoint Updates an Album")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Album Updated"),
-            @ApiResponse(code = 400, message = "Empty Name"),
-            @ApiResponse(code = 401, message = "Album Already Exists"),
-            @ApiResponse(code = 500, message = "Server Side Exception")
+    @Operation(summary = "Update Album", description = "This Endpoint Updates an Album")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Album Updated"),
+            @ApiResponse(responseCode = "400", description = "Empty Name"),
+            @ApiResponse(responseCode = "401", description = "Album Already Exists"),
+            @ApiResponse(responseCode = "500", description = "Server Side Exception")
     })
     @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Album album) {
@@ -75,10 +75,10 @@ public class AlbumController {
     }
 
     // <-------------------- DELETE METHOD -------------------->
-    @ApiOperation(value = "Delete Album", notes = "This Endpoint Deletes an Album")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Album Deleted"),
-            @ApiResponse(code = 500, message = "Server Side Exception")
+    @Operation(summary = "Delete Album", description = "This Endpoint Deletes an Album")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Album Deleted"),
+            @ApiResponse(responseCode = "500", description = "Server Side Exception")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {

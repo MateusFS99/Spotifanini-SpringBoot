@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.stefanini.spotifanini.model.Playlist;
 import com.stefanini.spotifanini.service.PlaylistService;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/playlist")
@@ -34,7 +34,7 @@ public class PlaylistController {
     }
 
     // <-------------------- GET All Playlists -------------------->
-    @ApiOperation(value = "Get All Playlists", notes = "This Endpoint Provides The List of All Playlists With Pagination")
+    @Operation(summary = "Get All Playlists", description = "This Endpoint Provides The List of All Playlists With Pagination")
     @GetMapping
     public Page<Playlist> findAllPlaylists(
             @PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 20) Pageable pagination) {
@@ -42,19 +42,19 @@ public class PlaylistController {
     }
 
     // <-------------------- GET Playlist -------------------->
-    @ApiOperation(value = "Get Playlist", notes = "This Endpoint Provides The Playlist by The ID")
+    @Operation(summary = "Get Playlist", description = "This Endpoint Provides The Playlist by The ID")
     @GetMapping("/{id}")
     public Playlist findById(@PathVariable Long id) {
         return playlistService.findById(id);
     }
 
     // <------------------- POST METHODS -------------------->
-    @ApiOperation(value = "Save Playlist", notes = "This Endpoint Saves a New Playlist")
+    @Operation(summary = "Save Playlist", description = "This Endpoint Saves a New Playlist")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Playlist Saved"),
-            @ApiResponse(code = 400, message = "Empty Name"),
-            @ApiResponse(code = 401, message = "Playlist Already Exists"),
-            @ApiResponse(code = 500, message = "Server Side Exception")
+            @ApiResponse(responseCode = "200", description = "Playlist Saved"),
+            @ApiResponse(responseCode = "400", description = "Empty Name"),
+            @ApiResponse(responseCode = "401", description = "Playlist Already Exists"),
+            @ApiResponse(responseCode = "500", description = "Server Side Exception")
     })
     @PostMapping
     public ResponseEntity<String> save(@RequestBody Playlist playlist) {
@@ -62,13 +62,13 @@ public class PlaylistController {
     }
 
     // Add Music to Playlist
-    @ApiOperation(value = "Add Music to Playlist", notes = "This Endpoint Adds a Music in a Playlist")
+    @Operation(summary = "Add Music to Playlist", description = "This Endpoint Adds a Music in a Playlist")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Music Added to the Playlist"),
-            @ApiResponse(code = 500, message = "Server Side Exception"),
-            @ApiResponse(code = 400, message = "Music Already Added"),
-            @ApiResponse(code = 404, message = "Playlist Not Found"),
-            @ApiResponse(code = 405, message = "Music Not Found")
+            @ApiResponse(responseCode = "200", description = "Music Added to the Playlist"),
+            @ApiResponse(responseCode = "500", description = "Server Side Exception"),
+            @ApiResponse(responseCode = "400", description = "Music Already Added"),
+            @ApiResponse(responseCode = "404", description = "Playlist Not Found"),
+            @ApiResponse(responseCode = "405", description = "Music Not Found")
     })
     @PostMapping("/{playlistId}/addMusic/{musicId}")
     public ResponseEntity<String> addMusic(@PathVariable Long playlistId, @PathVariable Long musicId) {
@@ -76,12 +76,12 @@ public class PlaylistController {
     }
 
     // <-------------------- PUT METHOD -------------------->
-    @ApiOperation(value = "Update Playlist", notes = "This Endpoint Updates a Playlist")
+    @Operation(summary = "Update Playlist", description = "This Endpoint Updates a Playlist")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Playlist Updated"),
-            @ApiResponse(code = 400, message = "Empty Name"),
-            @ApiResponse(code = 401, message = "Playlist Already Exists"),
-            @ApiResponse(code = 500, message = "Server Side Exception")
+            @ApiResponse(responseCode = "200", description = "Playlist Updated"),
+            @ApiResponse(responseCode = "400", description = "Empty Name"),
+            @ApiResponse(responseCode = "401", description = "Playlist Already Exists"),
+            @ApiResponse(responseCode = "500", description = "Server Side Exception")
     })
     @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Playlist playlist) {
@@ -89,10 +89,10 @@ public class PlaylistController {
     }
 
     // <-------------------- DELETE METHOD -------------------->
-    @ApiOperation(value = "Delete Playlist", notes = "This Endpoint Deletes a Playlist")
+    @Operation(summary = "Delete Playlist", description = "This Endpoint Deletes a Playlist")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Playlist Deleted"),
-            @ApiResponse(code = 500, message = "Server Side Exception")
+            @ApiResponse(responseCode = "200", description = "Playlist Deleted"),
+            @ApiResponse(responseCode = "500", description = "Server Side Exception")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
@@ -100,13 +100,13 @@ public class PlaylistController {
     }
 
     // Remove Music of Playlist
-    @ApiOperation(value = "Remove Music from Playlist", notes = "This Endpoint Removes a Music from a Playlist")
+    @Operation(summary = "Remove Music from Playlist", description = "This Endpoint Removes a Music from a Playlist")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Music Removed to the Playlist"),
-            @ApiResponse(code = 500, message = "Server Side Exception"),
-            @ApiResponse(code = 400, message = "Music Doesn't Exists in The Playlist"),
-            @ApiResponse(code = 404, message = "Playlist Not Found"),
-            @ApiResponse(code = 405, message = "Music Not Found")
+            @ApiResponse(responseCode = "200", description = "Music Removed to the Playlist"),
+            @ApiResponse(responseCode = "500", description = "Server Side Exception"),
+            @ApiResponse(responseCode = "400", description = "Music Doesn't Exists in The Playlist"),
+            @ApiResponse(responseCode = "404", description = "Playlist Not Found"),
+            @ApiResponse(responseCode = "405", description = "Music Not Found")
     })
     @DeleteMapping("/{playlistId}/removeMusic/{musicId}")
     public ResponseEntity<String> removeMusic(@PathVariable Long playlistId, @PathVariable Long musicId) {
