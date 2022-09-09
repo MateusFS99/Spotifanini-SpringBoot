@@ -40,7 +40,7 @@ public class User {
 
     private String password;
 
-    private Boolean admin;
+    private String profile;
 
     @OneToMany(mappedBy = "user")
     @JsonBackReference
