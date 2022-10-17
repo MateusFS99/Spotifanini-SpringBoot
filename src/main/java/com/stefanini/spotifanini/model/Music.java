@@ -39,7 +39,7 @@ public class Music {
     private Genre genre;
 
     @ManyToOne
-    private Album album;
+    private Album album;    
 
     @ManyToMany(mappedBy = "musics")
     @JsonBackReference
